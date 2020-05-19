@@ -1,0 +1,37 @@
+{
+  "name": "narratory-grateful",
+  "version": "0.0.3",
+  "description": "A voice-first grateful journaling app built using Narratory.io",
+  "config": {
+    "agent": "agent.ts"
+  },
+  "scripts": {
+    "start": "tsc && node node_modules/narratory/out/cmd/start.js",
+    "build": "tsc && node node_modules/narratory/out/cmd/build.js",
+    "chat": "node node_modules/narratory/out/cmd/chat.js",
+    "deploy": "tsc && node node_modules/narratory/out/cmd/deploy.js",
+    "updateEntities": "node node_modules/narratory/out/generators/scanner.js",
+    "watch": "tsc --watch"
+  },
+  "watch": {
+    "updateEntities": {
+      "patterns": [
+        "src"
+      ],
+      "ignore": "src/user.ts",
+      "quiet": true,
+      "extensions": "ts"
+    }
+  },
+  "author": "luddilo",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.12.21",
+    "narratory": "^0.13.12"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.2",
+    "npm-watch": "^0.6.0",
+    "typescript": "^3.8.2"
+  }
+}

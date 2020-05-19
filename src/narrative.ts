@@ -71,4 +71,4 @@ const end: BotTurn = {
   goto: EXIT
 }
 
-export const narrative = ["new stuff...!", greeting, auth, noGoogleAuth, ...addGratefulNarrative, end, ...cheerUpNarrative]
+export const narrative = [greeting, auth, noGoogleAuth, ...addGratefulNarrative, end, ...cheerUpNarrative]
