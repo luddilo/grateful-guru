@@ -3,6 +3,7 @@ import { addGratefulNarrative } from "./addGrateful"
 import { cheerUpNarrative } from "./cheerUp"
 import { END } from "./labels"
 import { testingEmail, testingName } from "../config.json"
+import { getBackendUrl } from "./backend/getBackendUrl"
 
 const greeting: BridgeTurn = {
   say: ["Hello", "Hi"],
@@ -27,7 +28,7 @@ const auth: BotTurn = {
       intent: SignInSuccess,
       bot: {
         say: "Now, let's get started!",
-        url: "https://europe-west1-grateful-bnihxr.cloudfunctions.net/saveUser",
+        url: getBackendUrl("/saveUser"),
         params: ["user_email", "user_name"]
       }
     },

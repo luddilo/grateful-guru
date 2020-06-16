@@ -1,10 +1,11 @@
 import { BridgeTurn, BotTurn } from "narratory"
 import * as nlu from "./nlu"
 import { END, CHEER_UP } from "./labels"
+import { getBackendUrl } from "./backend/getBackendUrl"
 
 const cheerUp: BridgeTurn = {
   label: CHEER_UP,
-  url: "https://europe-west1-grateful-bnihxr.cloudfunctions.net/getGrateful",
+  url: getBackendUrl("/getGrateful"),
   params: ["user_email"],
   bot: [
     {

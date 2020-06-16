@@ -6,12 +6,6 @@ import { ADD_GRATEFUL, CHEER_UP, END, ADD_MORE } from "./labels"
 import { userInitiatives } from "./userInitiatives"
 
 const query: BotTurn = {
-  /*
-          qs: elaborate?
-          qs: was it correct?
-          "it was wrong"
-          
-      */
   label: ADD_GRATEFUL,
   say: [
     {
@@ -90,7 +84,7 @@ const query: BotTurn = {
         ]
       }
     },
-    ...userInitiatives
+    ...userInitiatives // Adding our UIs here since we are catching a sys.any entitiy in the isGrateful intent which will rank higher in classification than our user initiatives even if they theoretically are better matches
   ]
 }
 

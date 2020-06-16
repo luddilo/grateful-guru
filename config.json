@@ -1,4 +1,7 @@
 {
   "testingEmail": "some.email@example.com",
-  "testingName": "Your Name"
+  "testingName": "Your Name",
+  "publicUrl": "<PUBLIC_URL_HERE>",
+  "localUrl": "<NGROK_URL_HERE>",
+  "local": true
 }

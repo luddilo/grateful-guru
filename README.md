@@ -26,8 +26,7 @@ The bot is built using Narratory and is using Google Auth account linking on Goo
 
 1. Run `npm run dev` to emulate your cloud functions locally
 1. Download and install [ngrok](https://ngrok.com/) and then run it in your app folder with `npm run ngrok` or `npm run ngrok:subdomain` if you have a dedicated subdomain (recommended since otherwise the URL will change for every run).
-1. Update all URLs in the bot files to use your public ngrok URL instead of the deployed cloudfunctions URL, for example 
-`https://f8a3b871a2ee.ngrok.io/my-grateful-project/europe-west1/saveUser` instead of `https://europe-west1-my-grateful-project.cloudfunctions.net/saveUser`
+1. Add your ngrok url to the `config.json` file and change `local` to true in the same file
 1. Run `narratory build` on your bot to update it to connect to your local backend
 
 

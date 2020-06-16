@@ -1,9 +1,10 @@
 import { UserTurn, EXIT, BridgeTurn, DynamicBotTurn } from "narratory"
 import * as nlu from "./nlu"
 import * as phrases from "./phrases"
+import { getBackendUrl } from "./backend/getBackendUrl"
 
 export const saveGrateful : BridgeTurn = {
-  url: "https://europe-west1-grateful-bnihxr.cloudfunctions.net/saveGrateful",
+  url: getBackendUrl("/saveGrateful"),
   params: ["gratefuls", "user_email"],
   set: { 
     added: true
