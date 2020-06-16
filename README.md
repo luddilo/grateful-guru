@@ -21,6 +21,7 @@ The bot is built using Narratory and is using Google Auth account linking on Goo
 1. Make sure the service account you created for Narratory (and with credentials you put in `google_credentials.json`) has the **Firebase Develop Admin** role in the [Google Cloud IAM console](https://console.cloud.google.com/iam-admin)
 1. Create a Firebase Firestore Database for your Google project at [Firebase console](https://console.firebase.google.com/)
 1. Deploy the cloud functions with `firebase deploy`
+1. Add your public URL (excluding the function name, for example `https://europe-west1-grateful-bnihxr.cloudfunctions.net`) to the `config.json` file
 
 ### Running backend locally
 
