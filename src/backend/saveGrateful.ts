@@ -1,6 +1,6 @@
 import { cloudFunction } from "narratory-cloud"
 import { db } from "./db"
-import admin = require("firebase-admin")
+import admin from "firebase-admin"
 
 export const saveGrateful = cloudFunction(async (req, res) => {
     const { user_email, gratefuls } = req.body
@@ -45,5 +45,6 @@ export const saveGrateful = cloudFunction(async (req, res) => {
       })
     }
   }, {
-    localDevelopmentUrl: "https://narratory.eu.ngrok.io/grateful-bnihxr/europe-west1/saveGrateful"
+    region: "europe-west1",
+    memory: "2GB" // To make cold starts faster
   })

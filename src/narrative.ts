@@ -2,6 +2,7 @@ import { BotTurn, BridgeTurn, EXIT, SignInSuccess, SignInFailed } from "narrator
 import { addGratefulNarrative } from "./addGrateful"
 import { cheerUpNarrative } from "./cheerUp"
 import { END } from "./labels"
+import { testingEmail, testingName } from "../config.json"
 
 /*
 
@@ -56,10 +57,10 @@ const noGoogleAuth: BotTurn = {
   cond: {
     platform: "unknown"
   },
-  say: "TESTING ONLY... setting your email to ludvig.linse@gmail.com",
+  say: `[TESTING ONLY] setting your credentials to ${testingEmail} / ${testingName}`,
   set: {
-    user_email: "ludvig.linse@gmail.com",
-    user_name: "Ludvig Linse"
+    user_email: testingEmail,
+    user_name: testingName
   }
 }
 

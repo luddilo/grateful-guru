@@ -35,5 +35,6 @@ export const saveUser = cloudFunction(async (req, res) => {
       })
     }
   }, {
-    localDevelopmentUrl: "https://narratory.eu.ngrok.io/grateful-bnihxr/europe-west1/saveUser"
+    region: "europe-west1",
+    memory: "2GB" // To make cold starts faster
   })
