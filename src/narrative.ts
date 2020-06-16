@@ -4,18 +4,6 @@ import { cheerUpNarrative } from "./cheerUp"
 import { END } from "./labels"
 import { testingEmail, testingName } from "../config.json"
 
-/*
-
-Private and public gratefuls
-"What was I grateful for X time ago?"
-Create circles, where people can share their gratefuls. Circles can be either private or open
-Allow reporting of gratefuls
-// Todo: add an auth-state or optionally allow people to just listen to other people's gratefuls
-
-Platform:
-- Have botturns that aren't part of Narrative, or maybe several narratives..
-*/
-
 const greeting: BridgeTurn = {
   say: ["Hello", "Hi"],
   bot: [
