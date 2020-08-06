@@ -1,6 +1,6 @@
 import { BridgeTurn, BotTurn } from "narratory"
 import * as nlu from "./nlu"
-import { END, CHEER_UP } from "./labels"
+import { END, CHEER_UP, ADD_GRATEFUL } from "./labels"
 import { getBackendUrl } from "./backend/getBackendUrl"
 
 const cheerUp: BridgeTurn = {
@@ -9,10 +9,12 @@ const cheerUp: BridgeTurn = {
   params: ["user_email"],
   bot: [
     {
+      cond: {
+        previousGrateful: true
+      },
       say: [
         {
           cond: {
-            previousGrateful: true,
             fromUser: true
           },
           text: [
@@ -21,12 +23,13 @@ const cheerUp: BridgeTurn = {
             ]
         },
         {
-          cond: {
-            previousGrateful: true
-          },
           text: "Oh I like this one: _previousGrateful"
-        }
+        },
       ]
+    }, 
+    {
+      say: "I haven't yet recorded anything",
+      goto: ADD_GRATEFUL
     }
   ]
 }

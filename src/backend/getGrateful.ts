@@ -12,6 +12,7 @@ export const getGrateful = cloudFunction(async (req, res) => {
     if (!gratefuls || !Array.isArray(gratefuls) || gratefuls.length == 0) {
       res.json({
         set: {
+          previousGrateful: null,
           grateful: null
         }
       })

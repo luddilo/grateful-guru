@@ -3,38 +3,49 @@ import * as nlu from "./nlu"
 import * as phrases from "./phrases"
 import { getBackendUrl } from "./backend/getBackendUrl"
 
-export const saveGrateful : BridgeTurn = {
+export const saveGrateful: BridgeTurn = {
   url: getBackendUrl("/saveGrateful"),
   params: ["gratefuls", "user_email"],
-  set: { 
-    added: true
+  set: {
+    added: true,
   },
-  bot: ["Lovely. I'll remember this", "Great, I've saved it", "Nice, now I've stored it"] // Maybe ask if the grateful should be private or public?
+  bot: [
+    "Lovely. I'll remember this",
+    "Great, I've saved it",
+    "Nice, now I've stored it",
+  ], // Maybe ask if the grateful should be private or public?
 }
 
-export const youHeardWrong = ({ parent = false }: { parent: boolean }): UserTurn => {
+export const youHeardWrong = ({
+  parent = false,
+}: {
+  parent: boolean
+}): UserTurn => {
   return {
     intent: [...nlu.no.examples, "It was wrong"],
     bot: {
       say: ["Oops, try saying it again", "Sorry, try saying it one more time"],
-      repair: parent ? "PARENT" : true
-    }
+      repair: parent ? "PARENT" : true,
+    },
   }
 }
 
 export const handleValidatedGrateful = {
   say: phrases.wannaElaborate,
   set: {
-    gratefuls: "+_grateful"
+    gratefuls: "+_grateful",
   },
   user: [
-    { intent: nlu.yes, bot: { say: ["What should I add?", "What more?"], repair: true } },
+    {
+      intent: nlu.yes,
+      bot: { say: ["What should I add?", "What more?"], repair: true },
+    },
     {
       intent: nlu.isGratefulWithYes,
       bot: {
         say: phrases.confirmGrateful,
         set: {
-          elaborated: true
+          elaborated: true,
         },
         user: [
           {
@@ -43,27 +54,32 @@ export const handleValidatedGrateful = {
               {
                 // If we haven't elaborated, we get the question once
                 cond: {
-                  elaborated: false
+                  elaborated: false,
                 },
                 say: phrases.wannaElaborate,
                 set: {
-                  gratefuls: "+_grateful"
+                  gratefuls: "+_grateful",
                 },
-                repair: "PARENT"
+                repair: "PARENT",
               },
-              saveGrateful // If we have elaborated, we save the grateful
-            ]
+              {
+                set: {
+                  gratefuls: "+_grateful",
+                },
+                bot: saveGrateful, // If we have elaborated, we save the grateful
+              },
+            ],
           },
-          youHeardWrong({ parent: true })
-        ]
-      }
+          youHeardWrong({ parent: true }),
+        ],
+      },
     },
     {
       intent: nlu.no,
       bot: {
         say: "Okay, no problem!",
-        bot: saveGrateful
-      }
-    }
-  ]
+        bot: saveGrateful,
+      },
+    },
+  ],
 }
