@@ -4,7 +4,7 @@ import {
   EXIT,
   SignInSuccess,
   SignInFailed,
-} from "narratory"
+} from "narratory-lib"
 import { addGratefulNarrative } from "./addGrateful"
 import { cheerUpNarrative } from "./cheerUp"
 import { END } from "./labels"
@@ -12,14 +12,16 @@ import { testingEmail, testingName } from "../config.json"
 import { getBackendUrl } from "./backend/getBackendUrl"
 
 const greeting: BridgeTurn = {
-  say: ["Hi", "Hello"],
+  say: [{ text: ["Hi", "Hello"] }],
   bot: [
     {
       cond: { user_returning: true },
-      say: "Welcome back to the Grateful Guru",
+      say: [{ text: ["Welcome back to the Grateful Guru"] }],
     },
     {
-      say: ["Welcome to the Grateful Guru", "I am the Grateful Guru"],
+      say: [
+        { text: ["Welcome to the Grateful Guru", "I am the Grateful Guru"] },
+      ],
     },
   ],
 }
@@ -28,22 +30,32 @@ const auth: BotTurn = {
   cond: {
     platform: "google",
   },
-  say: "To do grateful journaling",
+  say: [{ text: ["To do grateful journaling"] }],
   user: [
     {
       intent: SignInSuccess,
-      bot: {
-        say: "Now, let's get started!",
-        url: getBackendUrl("/saveUser"),
-        params: ["user_email", "user_name"],
-      },
+      bot: [
+        {
+          say: [{ text: ["Now, let's get started!"] }],
+          url: getBackendUrl("/saveUser"),
+          params: ["user_email", "user_name"],
+        },
+      ],
     },
     {
       intent: SignInFailed,
-      bot: {
-        say: "Unfortunately you have to sign in for me to be able to help you",
-        goto: END,
-      },
+      bot: [
+        {
+          say: [
+            {
+              text: [
+                "Unfortunately you have to sign in for me to be able to help you",
+              ],
+            },
+          ],
+          goto: END,
+        },
+      ],
     },
   ],
 }
@@ -52,7 +64,13 @@ const noGoogleAuth: BotTurn = {
   cond: {
     platform: "unknown",
   },
-  say: `[TESTING ONLY] setting your credentials to ${testingEmail} / ${testingName}`,
+  say: [
+    {
+      text: [
+        `[TESTING ONLY] setting your credentials to ${testingEmail} / ${testingName}`,
+      ],
+    },
+  ],
   set: {
     user_email: testingEmail,
     user_name: testingName,
@@ -63,7 +81,7 @@ const noGoogleAuth: BotTurn = {
 
 const end: BotTurn = {
   label: END,
-  say: "Goodbye for now",
+  say: [{ text: ["Goodbye for now"] }],
   goto: EXIT,
 }
 

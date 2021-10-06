@@ -1,4 +1,4 @@
-import { Intent, entities } from "narratory"
+import { Intent, entities } from "narratory-lib"
 
 export const yes: Intent = {
   examples: ["yes", "absolutely", "totally", "yeah"]

@@ -1,4 +1,4 @@
-import { UserTurn } from "narratory"
+import { UserTurn } from "narratory-lib"
 import * as nlu from "./nlu"
 import { ADD_GRATEFUL, CHEER_UP } from "./labels"
 
@@ -6,12 +6,14 @@ import { ADD_GRATEFUL, CHEER_UP } from "./labels"
     Questions and other user-driven initiatives
 */
 
-const addGrateful = {
+const addGrateful: UserTurn = {
   intent: nlu.addGrateful,
-  bot: {
-    say: "Okay, let's add a grateful!",
-    goto: ADD_GRATEFUL
-  }
+  bot: [
+    {
+      say: [{ text: ["Okay, let's add a grateful!"] }],
+      goto: ADD_GRATEFUL,
+    },
+  ],
 }
 
 /*
@@ -28,12 +30,14 @@ const addGrateful = {
   Bot: Now, do you want to hear another?
 */
 
-const cheerMeUp = {
+const cheerMeUp: UserTurn = {
   intent: nlu.cheerMeUp,
-  bot: {
-    say: "Absolutely",
-    goto: CHEER_UP
-  }
+  bot: [
+    {
+      say: [{ text: ["Absolutely"] }],
+      goto: CHEER_UP,
+    },
+  ],
 }
 
-export const userInitiatives : UserTurn[] = [addGrateful, cheerMeUp]
+export const userInitiatives: UserTurn[] = [addGrateful, cheerMeUp]

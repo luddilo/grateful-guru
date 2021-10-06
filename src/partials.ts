@@ -1,4 +1,10 @@
-import { UserTurn, EXIT, BridgeTurn, DynamicBotTurn } from "narratory"
+import {
+  UserTurn,
+  EXIT,
+  BridgeTurn,
+  DynamicBotTurn,
+  BotTurn,
+} from "narratory-lib"
 import * as nlu from "./nlu"
 import * as phrases from "./phrases"
 import { getBackendUrl } from "./backend/getBackendUrl"
@@ -10,9 +16,17 @@ export const saveGrateful: BridgeTurn = {
     added: true,
   },
   bot: [
-    "Lovely. I'll remember this",
-    "Great, I've saved it",
-    "Nice, now I've stored it",
+    {
+      say: [
+        {
+          text: [
+            "Lovely. I'll remember this",
+            "Great, I've saved it",
+            "Nice, now I've stored it",
+          ],
+        },
+      ],
+    },
   ], // Maybe ask if the grateful should be private or public?
 }
 
@@ -22,64 +36,88 @@ export const youHeardWrong = ({
   parent: boolean
 }): UserTurn => {
   return {
-    intent: [...nlu.no.examples, "It was wrong"],
-    bot: {
-      say: ["Oops, try saying it again", "Sorry, try saying it one more time"],
-      repair: parent ? "PARENT" : true,
+    intent: {
+      examples: [...nlu.no.examples, "It was wrong"],
     },
+    bot: [
+      {
+        say: [
+          {
+            text: [
+              "Oops, try saying it again",
+              "Sorry, try saying it one more time",
+            ],
+          },
+        ],
+        repair: {
+          repair: true,
+          parent,
+          repeat: false,
+        },
+      },
+    ],
   }
 }
 
-export const handleValidatedGrateful = {
-  say: phrases.wannaElaborate,
+export const handleValidatedGrateful: BotTurn = {
+  say: [{ text: phrases.wannaElaborate }],
   set: {
     gratefuls: "+_grateful",
   },
   user: [
     {
       intent: nlu.yes,
-      bot: { say: ["What should I add?", "What more?"], repair: true },
+      bot: [
+        {
+          say: [{ text: ["What should I add?", "What more?"] }],
+          repair: { repair: true, parent: false, repeat: false },
+        },
+      ],
     },
     {
       intent: nlu.isGratefulWithYes,
-      bot: {
-        say: phrases.confirmGrateful,
-        set: {
-          elaborated: true,
-        },
-        user: [
-          {
-            intent: nlu.yes,
-            bot: [
-              {
-                // If we haven't elaborated, we get the question once
-                cond: {
-                  elaborated: false,
-                },
-                say: phrases.wannaElaborate,
-                set: {
-                  gratefuls: "+_grateful",
-                },
-                repair: "PARENT",
-              },
-              {
-                set: {
-                  gratefuls: "+_grateful",
-                },
-                bot: saveGrateful, // If we have elaborated, we save the grateful
-              },
-            ],
+      bot: [
+        {
+          say: [{ text: phrases.confirmGrateful }],
+          set: {
+            elaborated: true,
           },
-          youHeardWrong({ parent: true }),
-        ],
-      },
+          user: [
+            {
+              intent: nlu.yes,
+              bot: [
+                {
+                  // If we haven't elaborated, we get the question once
+                  cond: {
+                    elaborated: false,
+                  },
+                  say: [{ text: phrases.wannaElaborate }],
+                  set: {
+                    gratefuls: "+_grateful",
+                  },
+                  repair: { repair: true, parent: true, repeat: false },
+                },
+                {
+                  set: {
+                    gratefuls: "+_grateful",
+                  },
+                  bot: [saveGrateful], // If we have elaborated, we save the grateful
+                },
+              ],
+            },
+            youHeardWrong({ parent: true }),
+          ],
+        },
+      ],
     },
     {
       intent: nlu.no,
-      bot: {
-        say: "Okay, no problem!",
-        bot: saveGrateful,
-      },
+      bot: [
+        {
+          say: [{ text: ["Okay, no problem!"] }],
+          bot: [saveGrateful],
+        },
+      ],
     },
   ],
 }
