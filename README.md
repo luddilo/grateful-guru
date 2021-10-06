@@ -8,7 +8,7 @@ The bot is built using Narratory and is using Google Auth account linking on Goo
 
 1. Install Narratory with `npm install -g narratory`
 2. Clone this repository.
-4. Install dependencies with `npm install`
+4. Install dependencies with `npm install` or `yarn`
 5. Set up credentials (see [Narratory docs on setup](https://narratory.io/docs/setup))
 6. Create your agent and start an interactive chat-prompt in the terminal with `narratory start`
 
